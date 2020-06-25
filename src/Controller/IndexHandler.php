@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace src\Controller;
 
 use src\UseCase\UseCaseInterface;
@@ -13,7 +16,6 @@ class IndexHandler
     }
     
     public function handle(){
-        //echo count($this->service->read());
         var_dump($this->service->read());
     }
 }

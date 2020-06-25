@@ -1,7 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
 namespace src\Driver;
 
-include_once 'src/Entity/Und.php';
+require_once 'src/Entity/Und.php';
+require_once 'src/Driver/RepositoryInterface.php';
 
 use src\Entity\Und;
 

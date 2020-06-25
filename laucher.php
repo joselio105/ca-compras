@@ -1,22 +1,14 @@
 <?php
-include_once 'src/Controller/IndexHandler.php';
-include_once 'src/Driver/RepositoryInterface.php';
-include_once 'src/Driver/MysqlRepository.php';
-include_once 'src/UseCase/Service.php';
+
+declare(strict_types=1);
+
+require_once 'src/Controller/IndexHandler.php';
+require_once 'src/Controller/HandlerFactory.php';
+require_once 'src/Driver/MysqlConnData.php';
 
 use src\Controller\IndexHandler;
-use src\Driver\MysqlRepository;
-use src\UseCase\Service;
-
-$dsn = "mysql:dbname=compras;host=localhost";
-$options = array(
-    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'
-);
-
-$conn = new PDO($dsn, 'root', '', $options);
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$repository = new MysqlRepository($conn);
-$service = new Service($repository);
+use src\Controller\HandlerFactory;
+use src\Driver\MysqlConnData;
 
 $params = array();
 $queryString = $_SERVER['QUERY_STRING'];
@@ -26,5 +18,5 @@ foreach(explode('&', $queryString) as $slice){
 }
 echo "<h2>{$params['ctlr']}</h2>";
 
-$ctrl = new IndexHandler($service);
-$ctrl->handle();
+$invoke = new HandlerFactory();
+$invoke(new MysqlConnData(), IndexHandler::class);
