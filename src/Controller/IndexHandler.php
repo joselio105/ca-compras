@@ -16,7 +16,6 @@ class IndexHandler
     }
     
     public function handle(){
-        //echo count($this->service->read());
         var_dump($this->service->read());
     }
 }

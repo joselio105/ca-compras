@@ -18,8 +18,5 @@ foreach(explode('&', $queryString) as $slice){
 }
 echo "<h2>{$params['ctlr']}</h2>";
 
-/*$ctrl = new IndexHandler($service);
-$ctrl->handle();*/
-
 $invoke = new HandlerFactory();
 $invoke(new MysqlConnData(), IndexHandler::class);
