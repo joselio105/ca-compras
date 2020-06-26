@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace src\Controller;
 
 use src\UseCase\UseCaseInterface;
+use libs\Html\HtmlTagsInterface;
 
 class IndexHandler
 {
@@ -15,8 +16,9 @@ class IndexHandler
         $this->service = $service;
     }
     
-    public function handle(){
-        var_dump($this->service->read());
+    public function handle(HtmlTagsInterface $htmlCode)
+    {        
+        return $htmlCode;
     }
 }
 

@@ -104,6 +104,33 @@ h2{
 	border-bottom: 2px solid teal;
 }
 
+table{
+	min-width: 100%;
+}
+
+table, tr, th, td{
+	border-collapse: collapse;
+	border: 1px solid gray;
+}
+
+th, td{
+	text-align: left;
+}
+
+th{
+	background-color: teal;
+	color: white;
+	padding: 10px 5px;
+}
+
+td{
+	padding: 5px;
+}
+
+.table{
+	width: 100%;
+}
+
 /*
 *	RODAPÉ
 */
