@@ -5,6 +5,7 @@ require_once 'src/UseCase/UseCaseInterface.php';
 
 use src\Entity\Und;
 use src\Driver\RepositoryInterface;
+use src\Entity\EntityInterface;
 
 class Service implements UseCaseInterface
 {
@@ -21,14 +22,14 @@ class Service implements UseCaseInterface
         return $this->repository->read($query);
     }
 
-    public function create(Und $unidade)
+    public function create(EntityInterface $entity)
     {
-        return $this->repository->create($unidade);
+        return $this->repository->create($entity);
     }
 
-    public function update(Und $unidade, $id)
+    public function update(EntityInterface $entity, int $id)
     {
-        return $this->repository->update($unidade, $id);
+        return $this->repository->update($entity, $id);
     }
 
     public function delete($id)

@@ -8,15 +8,18 @@ require_once 'src/Entity/Und.php';
 require_once 'src/Driver/RepositoryInterface.php';
 
 use src\Entity\Und;
+use src\Entity\EntityInterface;
 
 class MysqlRepository implements RepositoryInterface
 {
 
     private $conn;
+    private $entity;
     
-    public function __construct(\PDO $conn)
+    public function __construct(\PDO $conn, EntityInterface $entity)
     {
         $this->conn = $conn;
+        $this->entity = $entity;
     }
 
     public function read($query=null)

@@ -16,7 +16,8 @@ foreach(explode('&', $queryString) as $slice){
     $part = explode('=', $slice);
     $params[$part[0]] = $part[1];
 }
-echo "<h2>{$params['ctlr']}</h2>";
+$params['ctlr'] = (key_exists('ctlr', $params) ? $params['ctlr'] : 'read');
+echo "<h2>{$params['ent']}/ {$params['ctlr']}</h2>";
 
 $invoke = new HandlerFactory();
-$invoke(new MysqlConnData(), IndexHandler::class);
+echo $invoke(new MysqlConnData(), IndexHandler::class);
