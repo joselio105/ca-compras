@@ -10,6 +10,4 @@
 
 
 #Arquivos
-/main/config/*.json
-/main/config/menu/*.json
-/sys/config/*.json
+/config/*.json
