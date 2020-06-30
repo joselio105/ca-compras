@@ -3,7 +3,6 @@ namespace src\UseCase;
 
 require_once 'src/UseCase/UseCaseInterface.php';
 
-use src\Entity\Und;
 use src\Driver\RepositoryInterface;
 use src\Entity\EntityInterface;
 

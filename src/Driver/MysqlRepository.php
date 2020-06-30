@@ -14,12 +14,10 @@ class MysqlRepository implements RepositoryInterface
 {
 
     private $conn;
-    private $entity;
     
-    public function __construct(\PDO $conn, EntityInterface $entity)
+    public function __construct(\PDO $conn)
     {
         $this->conn = $conn;
-        $this->entity = $entity;
     }
 
     public function read($query=null)
@@ -40,7 +38,7 @@ class MysqlRepository implements RepositoryInterface
         return $all;
     }
 
-    public function create(Und $und)
+    public function create(EntityInterface $entity)
     {
         $sql = "INSERT INTO cmp_und(nome, sigla) VALUES(:nome, :sigla)";
         $stmt = $this->conn->prepare($sql);
@@ -50,7 +48,7 @@ class MysqlRepository implements RepositoryInterface
         return $this->conn->lastInsertId();
     }
 
-    public function update(Und $und, $id)
+    public function update(EntityInterface $entity, $id)
     {}
 
     public function delete($id)

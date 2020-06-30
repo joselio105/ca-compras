@@ -1,6 +1,8 @@
 <?php
 namespace src\Entity;
 
+require_once 'src/Entity/EntityInterface.php';
+
 class Und implements EntityInterface
 {
     private $id;
