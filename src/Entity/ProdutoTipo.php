@@ -6,16 +6,14 @@ namespace src\Entity;
 
 require_once 'src/Entity/Entity.php';
 
-class DbMysqlConfig extends Entity
+class ProdutoTipo extends Entity
 {
-    public $dbHost;
-    public $dbName;
-    public $dbUser;
-    public $dbPswd;
+    public $id;
+    public $nome;
     
     public function getTableName()
     {
-        return null;
+        return 'lcp_pdt_tp';
     }
 
 
