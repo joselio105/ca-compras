@@ -3,6 +3,7 @@ namespace src\UseCase;
 
 use src\Driver\RepositoryInterface;
 use src\Entity\EntityInterface;
+use libs\Sql\SqlRead;
 
 interface UseCaseInterface
 {
@@ -10,7 +11,7 @@ interface UseCaseInterface
     
     public function create(EntityInterface $entity);
     
-    public function read(string $query=null);
+    public function read(SqlRead $read);
     
     public function update(EntityInterface $entity, int $id);
     

@@ -49,6 +49,11 @@ class MysqlConnData implements ContainerInterface
         return is_object($this->conn);
     }
     
+    public function getEntity()
+    {
+        return $this->entity;
+    }
+    
     /**
      * Recupera os dados do arquivo de configuração
      * @return boolean
