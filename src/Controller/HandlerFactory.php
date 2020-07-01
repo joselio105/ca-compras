@@ -18,6 +18,7 @@ class HandlerFactory
     public function __invoke(ContainerInterface $container, $requestedName)
     {
         $repo = $container->get(MysqlRepository::class);
+        
         $servive = new Service($repo);        
         $ctrl = new $requestedName($servive);
         
