@@ -5,6 +5,7 @@ require_once 'src/UseCase/UseCaseInterface.php';
 
 use src\Driver\RepositoryInterface;
 use src\Entity\EntityInterface;
+use libs\Sql\SqlRead;
 
 class Service implements UseCaseInterface
 {
@@ -16,9 +17,9 @@ class Service implements UseCaseInterface
         $this->repository = $repository;
     }
 
-    public function read($query = null)
+    public function read(SqlRead $read)
     {
-        return $this->repository->read($query);
+        return $this->repository->read($read);
     }
 
     public function create(EntityInterface $entity)

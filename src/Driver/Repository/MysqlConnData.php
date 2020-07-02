@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-namespace src\Driver;
+namespace src\Driver\Repository;
 
 require_once 'Vendor/psr/container/src/ContainerInterface.php';
-require_once 'src/Driver/JsonRepository.php';
+require_once 'src/Driver/Repository/JsonRepository.php';
 require_once 'src/Entity/DbMysqlConfig.php';
 
 use Psr\Container\ContainerInterface;
 use src\Entity\DbMysqlConfig;
 use src\Entity\EntityInterface;
+use src\Driver\JsonRepository;
 
 class MysqlConnData implements ContainerInterface
 {
@@ -47,6 +48,11 @@ class MysqlConnData implements ContainerInterface
     public function has($id)
     {
         return is_object($this->conn);
+    }
+    
+    public function getEntity()
+    {
+        return $this->entity;
     }
     
     /**
