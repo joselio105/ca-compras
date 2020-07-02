@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace src\Controller;
 
 require_once 'src/UseCase/Service.php';
-require_once 'src/Driver/MysqlRepository.php';
+require_once 'src/Driver/Repository/MysqlRepository.php';
 require_once 'libs/Html/HtmlTagTable.php';
 require_once 'libs/Sql/SqlRead.php';
 
 use Psr\Container\ContainerInterface;
-use src\Driver\MysqlRepository;
 use src\UseCase\Service;
 use libs\Html\HtmlTagTable;
 use libs\Sql\SqlRead;
@@ -20,6 +19,7 @@ use src\Entity\Mercadoria;
 use src\Entity\Unidade;
 use src\Entity\EmbalagemTipo;
 use src\Entity\Embalagem;
+use src\Driver\Repository\MysqlRepository;
 
 class HandlerFactory
 {
@@ -31,7 +31,11 @@ class HandlerFactory
         $ctrl = new $requestedName($servive);
         
         $response = array();
-        foreach ($servive->read($this->getSql($container, $requestedName)) as $i=>$line)
+        
+        $entity = $container->getEntity();
+        $sql = require "src/Driver/Sql/{$entity->getTableName()}/Read.php";
+        
+        foreach ($servive->read($sql) as $i=>$line)
         {
             $response[$i]['Unidade'] = $line->getNome();
             $response[$i]['Sigla'] = $line->getSigla();
@@ -94,6 +98,7 @@ class HandlerFactory
                     'lcp_und.sigla'
                 ), 'mcdNome');
                 $sql->setOrder('mcdNome');
+                $sql->setLimit(5);
                 break;
         }
         

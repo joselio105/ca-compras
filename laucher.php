@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require_once 'src/Controller/IndexHandler.php';
 require_once 'src/Controller/HandlerFactory.php';
-require_once 'src/Driver/MysqlConnData.php';
+require_once 'src/Driver/Repository/MysqlConnData.php';
 foreach (glob("src/Entity/*.php") as $file)
 {
     require_once $file;
@@ -12,7 +12,7 @@ foreach (glob("src/Entity/*.php") as $file)
 
 use src\Controller\IndexHandler;
 use src\Controller\HandlerFactory;
-use src\Driver\MysqlConnData;
+use src\Driver\Repository\MysqlConnData;
 use src\Entity\Unidade;
 use src\Entity\ProdutoTipo;
 use src\Entity\Produto;

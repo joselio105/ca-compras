@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace src\Driver;
+namespace src\Driver\Repository;
 
 require_once 'src/Driver/RepositoryInterface.php';
 
 use src\Entity\EntityInterface;
 use libs\Sql\SqlRead;
+use src\Driver\RepositoryInterface;
 
 class MysqlRepository implements RepositoryInterface
 {
@@ -23,6 +24,7 @@ class MysqlRepository implements RepositoryInterface
 
     public function read(SqlRead $read)
     {
+        //var_dump($read->__toString());die;
         $result = $this->conn->query($read->__toString());
         $result = $result->fetchAll(\PDO::FETCH_CLASS);
         var_dump($result);die;
