@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace src\Driver;
+namespace src\Driver\Repository;
 
 use src\Entity\EntityInterface;
-use src\Entity\DbMysqlConfig;
+use src\Driver\RepositoryInterface;
 
 class JsonRepository implements RepositoryInterface
 {

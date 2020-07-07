@@ -5,9 +5,9 @@ namespace src\Driver\Sql\lcp_emb;
 require_once 'libs/Sql/SqlRead.php';
 
 use libs\Sql\SqlRead;
-use src\Entity\Embalagem;
-use src\Entity\Unidade;
-use src\Entity\EmbalagemTipo;
+use src\Entity\Simple\Embalagem;
+use src\Entity\Simple\Unidade;
+use src\Entity\Simple\EmbalagemTipo;
 
 $sql = new SqlRead(new Embalagem());
 $sql->setJoin(new Unidade(), "lcp_emb.unidade=lcp_und.id");

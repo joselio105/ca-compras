@@ -5,13 +5,13 @@ namespace src\Driver\Sql\lcp_hst;
 require_once 'libs/Sql/SqlRead.php';
 
 use libs\Sql\SqlRead;
-use src\Entity\Historico;
-use src\Entity\Mercadoria;
-use src\Entity\Produto;
-use src\Entity\ProdutoTipo;
-use src\Entity\Embalagem;
-use src\Entity\Unidade;
-use src\Entity\EmbalagemTipo;
+use src\Entity\Simple\Historico;
+use src\Entity\Simple\Mercadoria;
+use src\Entity\Simple\Produto;
+use src\Entity\Simple\ProdutoTipo;
+use src\Entity\Simple\Embalagem;
+use src\Entity\Simple\Unidade;
+use src\Entity\Simple\EmbalagemTipo;
 
 $sql = new SqlRead(new Historico());
 $sql->setJoin(new Mercadoria(), "lcp_hst.mercadoria=lcp_mcd.id");

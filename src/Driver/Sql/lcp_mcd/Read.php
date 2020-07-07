@@ -5,13 +5,13 @@ namespace src\Driver\Sql\lcp_mcd;
 require_once 'libs/Sql/SqlRead.php';
 
 use libs\Sql\SqlRead;
-use src\Entity\EmbalagemTipo;
-use src\Entity\Produto;
-use src\Entity\ProdutoTipo;
-use src\Entity\Embalagem;
-use src\Entity\Unidade;
-use src\Entity\Mercadoria;
-use src\Entity\Historico;
+use src\Entity\Simple\EmbalagemTipo;
+use src\Entity\Simple\Produto;
+use src\Entity\Simple\ProdutoTipo;
+use src\Entity\Simple\Embalagem;
+use src\Entity\Simple\Unidade;
+use src\Entity\Simple\Mercadoria;
+use src\Entity\Simple\Historico;
 
 $sql = new SqlRead(new Mercadoria());
 $sql->setJoin(new Produto(), "lcp_mcd.produto=lcp_pdt.id");
