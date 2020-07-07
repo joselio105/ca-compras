@@ -21,7 +21,12 @@ abstract class Entity implements EntityInterface
     
     public function getFields()
     {
-        $api = new \ReflectionClass($this);
+        return $this->listFields($this);
+    }
+    
+    private function listFields(Entity $entity)
+    {
+        $api = new \ReflectionClass($entity);
         foreach($api->getProperties(\ReflectionProperty::IS_PUBLIC) as $property)
         {
             $fields[] = $property->name;

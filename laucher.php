@@ -9,17 +9,21 @@ foreach (glob("src/Entity/*.php") as $file)
 {
     require_once $file;
 }
+foreach (glob("src/Entity/Simple/*.php") as $file)
+{
+    require_once $file;
+}
 
 use src\Controller\IndexHandler;
 use src\Controller\HandlerFactory;
 use src\Driver\Repository\MysqlConnData;
-use src\Entity\Unidade;
-use src\Entity\ProdutoTipo;
-use src\Entity\Produto;
-use src\Entity\Mercadoria;
-use src\Entity\Embalagem;
-use src\Entity\EmbalagemTipo;
-use src\Entity\Historico;
+use src\Entity\Simple\Unidade;
+use src\Entity\Simple\ProdutoTipo;
+use src\Entity\Simple\Produto;
+use src\Entity\Simple\Mercadoria;
+use src\Entity\Simple\Embalagem;
+use src\Entity\Simple\EmbalagemTipo;
+use src\Entity\Simple\Historico;
 
 $params = array();
 $queryString = $_SERVER['QUERY_STRING'];
