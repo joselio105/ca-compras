@@ -13,11 +13,6 @@ class Embalagem implements EntityInterface
     private $unidade;
     private $tipo;
     
-    public function getTableName()
-    {
-        return 'lcp_emb';
-    }
-    
     public function getId()
     {
         return $this->id;

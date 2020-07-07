@@ -7,16 +7,16 @@ namespace src\Driver\Repository;
 require_once 'Vendor/psr/container/src/ContainerInterface.php';
 require_once 'src/Driver/Repository/JsonRepository.php';
 require_once 'src/Entity/Simple/DbMysqlConfig.php';
-require_once 'Traits/EntityHandler.php';
+require_once 'Traits/EntityHandlerTrait.php';
 
 use Psr\Container\ContainerInterface;
 use src\Entity\Simple\DbMysqlConfig;
 use src\Entity\EntityInterface;
-use Traits\EntityHandler;
+use Traits\EntityHandlerTrait;
 
 class MysqlConnData implements ContainerInterface
 {
-    use EntityHandler;
+    use EntityHandlerTrait;
 
     private $conn;
     private $dbConfig;

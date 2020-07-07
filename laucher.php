@@ -23,7 +23,7 @@ use src\Entity\Simple\Produto;
 use src\Entity\Simple\Mercadoria;
 use src\Entity\Simple\Embalagem;
 use src\Entity\Simple\EmbalagemTipo;
-use src\Entity\Simple\Historico;
+use src\Entity\Simple\Compra;
 
 $params = array();
 $queryString = $_SERVER['QUERY_STRING'];
@@ -39,7 +39,7 @@ $entities = array(
     'mcd'=>Mercadoria::class,
     'emb'=>Embalagem::class,
     'emb_tp'=>EmbalagemTipo::class,
-    'hst'=>Historico::class
+    'hst'=>Compra::class
 );
 $entity = new $entities[$params['ent']];
 

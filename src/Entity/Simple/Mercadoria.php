@@ -12,11 +12,6 @@ class Mercadoria implements EntityInterface
     private $produto;
     private $embalagem;
     
-    public function getTableName()
-    {
-        return 'lcp_mcd';
-    }
-    
     public function getId()
     {
         return $this->id;

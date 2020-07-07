@@ -1,6 +1,6 @@
 <?php
 
-namespace src\Driver\Sql\lcp_pdt_tp;
+namespace src\Driver\Sql\produto_tipo;
 
 require_once 'libs/Sql/SqlRead.php';
 
