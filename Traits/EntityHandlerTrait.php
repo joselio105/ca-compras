@@ -3,7 +3,7 @@ namespace Traits;
 
 use src\Entity\EntityInterface;
 
-trait EntityHandler
+trait EntityHandlerTrait
 {
     public function getProperties(EntityInterface $entity)
     {
@@ -29,6 +29,16 @@ trait EntityHandler
     {
         $function = "get".ucfirst($property);
         return $entity->$function();
+    }
+    
+    public function getTableName(EntityInterface $entity)
+    {
+        $api = new \ReflectionClass($entity);
+        $namespace = $api->getNamespaceName();
+        $className = substr($api->getName(), strlen($namespace)+1);
+        $className = str_replace('T', '_t', $className);
+        
+        return strtolower($className);
     }
 }
 

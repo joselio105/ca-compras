@@ -12,11 +12,6 @@ class Unidade implements EntityInterface
     private $nome;
     private $sigla;
     
-    public function getTableName()
-    {
-        return 'lcp_und';
-    }
-    
     public function getId()
     {
         return $this->id;

@@ -13,16 +13,19 @@ use Psr\Container\ContainerInterface;
 use src\UseCase\Service;
 use libs\Html\HtmlTagTable;
 use libs\Sql\SqlRead;
-use src\Entity\Produto;
-use src\Entity\ProdutoTipo;
-use src\Entity\Mercadoria;
-use src\Entity\Unidade;
-use src\Entity\EmbalagemTipo;
-use src\Entity\Embalagem;
+use src\Entity\Simple\Produto;
+use src\Entity\Simple\ProdutoTipo;
+use src\Entity\Simple\Mercadoria;
+use src\Entity\Simple\Unidade;
+use src\Entity\Simple\EmbalagemTipo;
+use src\Entity\Simple\Embalagem;
 use src\Driver\Repository\MysqlRepository;
+use Traits\EntityHandlerTrait;
 
 class HandlerFactory
 {
+    use EntityHandlerTrait;
+    
     public function __invoke(ContainerInterface $container, $requestedName)
     {
         $repo = $container->get(MysqlRepository::class);
@@ -33,7 +36,7 @@ class HandlerFactory
         $response = array();
         
         $entity = $container->getEntity();
-        $sql = require "src/Driver/Sql/{$entity->getTableName()}/Read.php";
+        $sql = require "src/Driver/Sql/{$this->getTableName($entity)}/Read.php";
         
         foreach ($servive->read($sql) as $i=>$line)
         {

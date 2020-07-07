@@ -1,6 +1,6 @@
 <?php
 
-namespace src\Driver\Sql\lcp_emb_tp;
+namespace src\Driver\Sql\embalagem_tipo;
 
 require_once 'libs/Sql/SqlRead.php';
 

@@ -6,7 +6,7 @@ namespace src\Entity\Simple;
 
 use src\Entity\EntityInterface;
 
-require_once 'src/Entity/Entity.php';
+require_once 'src/Entity/EntityInterface.php';
 
 class DbMysqlConfig implements EntityInterface
 {
@@ -14,11 +14,6 @@ class DbMysqlConfig implements EntityInterface
     private $dbName;
     private $dbUser;
     private $dbPswd;
-    
-    public function getTableName()
-    {
-        return null;
-    }
     
     public function getDbHost()
     {

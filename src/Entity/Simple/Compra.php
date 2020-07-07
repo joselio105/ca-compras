@@ -6,18 +6,13 @@ namespace src\Entity\Simple;
 
 use src\Entity\EntityInterface;
 
-class Historico implements EntityInterface
+class Compra implements EntityInterface
 {
     private $id;
     private $mercadoria;
     private $quantidade;
     private $preco;
     private $data;
-    
-    public function getTableName()
-    {
-        return 'lcp_hst';
-    }
     
     public function getId()
     {

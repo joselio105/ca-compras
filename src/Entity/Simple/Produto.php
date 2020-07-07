@@ -12,11 +12,6 @@ class Produto implements EntityInterface
     private $nome;
     private $tipo;
     
-    public function getTableName()
-    {
-        return 'lcp_pdt';
-    }
-    
     public function getId()
     {
         return $this->id;

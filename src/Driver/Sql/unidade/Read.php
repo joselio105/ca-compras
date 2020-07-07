@@ -1,6 +1,6 @@
 <?php
 
-namespace src\Driver\Sql\lcp_und;
+namespace src\Driver\Sql\unidade;
 
 require_once 'libs/Sql/SqlRead.php';
 

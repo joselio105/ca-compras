@@ -6,17 +6,10 @@ namespace src\Entity\Simple;
 
 use src\Entity\EntityInterface;
 
-require_once 'src/Entity/Entity.php';
-
 class ProdutoTipo implements EntityInterface
 {
     private $id;
     private $nome;
-    
-    public function getTableName()
-    {
-        return 'lcp_pdt_tp';
-    }
     
     public function getId()
     {
