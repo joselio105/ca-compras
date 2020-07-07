@@ -25,8 +25,9 @@ class MysqlRepository implements RepositoryInterface
     public function read(SqlRead $read)
     {
         //var_dump($read->__toString());die;
-        $result = $this->conn->query($read->__toString());
-        $result = $result->fetchAll(\PDO::FETCH_CLASS);
+        $stmt = $this->conn->prepare($read->__toString());
+        $stmt->execute($read->getStamments());
+        $result = $stmt->fetchAll(\PDO::FETCH_CLASS);
         var_dump($result);die;
         $className = get_class($this->entity);
         foreach ($result as $r):
