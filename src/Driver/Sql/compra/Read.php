@@ -28,4 +28,15 @@ $sql->setConcat(array(
 ), 'mcdNome');
 $sql->setOrder('mcdNome');
 
+$subQueries['soma'] = new SqlRead(new Compra());
+$subQueries['soma']->setSum('compra.preco');
+$subQueries['soma']->setWhere("compra.mercadoria=mercadoria.id");
+
+$subQueries['conta'] = new SqlRead(new Compra());
+$subQueries['conta']->setCount();
+$subQueries['conta']->setWhere("compra.mercadoria=mercadoria.id");
+
+foreach ($subQueries as $label=>$subQuery)
+    $sql->setSubQuery($subQuery, $label);
+
 return $sql;
