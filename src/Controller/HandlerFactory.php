@@ -36,6 +36,7 @@ class HandlerFactory
         $response = array();
         
         $entity = $container->getEntity();
+        
         $sql = require "src/Driver/Sql/{$this->getTableName($entity)}/Read.php";
         
         foreach ($servive->read($sql) as $i=>$line)
