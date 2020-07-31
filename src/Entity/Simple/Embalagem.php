@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace src\Entity\Simple;
 
-use src\Entity\EntityInterface;
-
-class Embalagem implements EntityInterface
+class Embalagem
 {
     private $id;
     private $capacidade;

@@ -5,17 +5,14 @@ declare(strict_types=1);
 namespace src\Driver\Repository;
 
 require_once 'src/Driver/RepositoryInterface.php';
-require_once 'Traits/EntityHandlerTrait.php';
 
 use src\Entity\EntityInterface;
 use libs\Sql\SqlRead;
 use src\Driver\RepositoryInterface;
-use Traits\EntityHandlerTrait;
+use src\Entity\EntityFactory;
 
 class MysqlRepository implements RepositoryInterface
 {
-    use EntityHandlerTrait;
-
     private $conn;
     private $entity;
     
@@ -31,13 +28,14 @@ class MysqlRepository implements RepositoryInterface
         $stmt->execute($read->getStamments());
         //$result = $stmt->fetch(\PDO::FETCH_NUM);
         
-        $className = get_class($this->entity);
+        $className = $this->entity->getEntityClassName();
+        
         $position = 0;
         while($row = $stmt->fetch(\PDO::FETCH_NUM))
         {
-            $entity = new $className();
-            $this->setProperties($entity, $row);                
-            $all[$position] = $entity;
+            $entity = new EntityFactory(new $className());
+            $entity->setAtributesValues($row);                
+            $all[$position] = $entity->getEntityObject();
             $position++;
         }
         

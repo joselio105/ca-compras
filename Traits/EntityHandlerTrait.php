@@ -2,10 +2,11 @@
 namespace Traits;
 
 use src\Entity\EntityInterface;
-use src\Entity\Extended\EmbalagemExtended;
 
 trait EntityHandlerTrait
 {
+    private $recursive;    
+    
     /**
      * Lista um array com as propriedades de uma classe Entity
      * @param EntityInterface $entity
@@ -14,15 +15,6 @@ trait EntityHandlerTrait
     public function getProperties(EntityInterface $entity)
     {
         $classAttrs = $this->getClassAttrs($entity);
-        
-        if(key_exists('parentClassName', $classAttrs))
-        {
-            foreach ($classAttrs['properties'] as $property)
-            {
-                array_push($classAttrs['parentProperties'], $property);
-                $classAttrs['properties'] = $classAttrs['parentProperties'];
-            }
-        } 
         
         return $classAttrs['properties'];
     }
@@ -35,14 +27,11 @@ trait EntityHandlerTrait
      */
     public function setProperty(EntityInterface $entity, string $property, $value)
     {
-        /*
-         * No caso de uma Entidade Simples vefificar se existe o método e executar
-         * No caso de uma Entidade Extendida:
-         *  - Verificar as Propriedades do ParentClass
-         *  - Verificar as Propriedades de cada Classe Propriedade
-         */
+        $classAttrs = $this->getClassAttrs($entity);
         $setFunction = "set".ucfirst($property);
-        $entity->$setFunction($value);
+        
+        if(in_array($setFunction, $classAttrs['methods']))
+            $entity->$setFunction($value);
     }
     
     /**
@@ -52,12 +41,42 @@ trait EntityHandlerTrait
      */
     public function setProperties(EntityInterface $entity, array $values)
     {
-        $properties = $this->getProperties($entity);
-        var_dump($this->getClassAttrs($entity));die;
-        foreach ($values as $id=>$value)
+        $id = 0;
+        foreach($this->listProperties($entity) as $ent=>$properties)
         {
-            $this->setProperty($entity, $properties[$id], $value);
+            foreach ($properties as $property)
+            {
+                $this->setProperty($ent, $property, $values[$id]);
+                $id++;
+            }
         }
+    }
+    
+    private function listProperties(EntityInterface $entity)
+    {
+        $list = array();
+        
+        $classAttr = $this->getClassAttrs($entity);
+        if($classAttr['parentClass'])
+        {
+            $entity = 
+            $list[$classAttr['parentClass']['className']] = $classAttr['parentClass']['properties'];
+        }
+        
+        foreach ($this->getProperties($entity) as $property)
+        {
+            $getFunction = "get".ucfirst($property);
+            $subEntity = $entity->$getFunction();
+            if(is_object($subEntity))
+            {
+                $list[get_class($subEntity)] = $this->getProperties($subEntity);
+            }else 
+            {
+                $list[get_class($entity)] = $this->getProperties($entity);
+            }
+        }
+        
+        return $list;
     }
     
     /**
@@ -80,8 +99,8 @@ trait EntityHandlerTrait
     public function getTableName(EntityInterface $entity)
     {
         $classAttrs = $this->getClassAttrs($entity);
-        if(key_exists('parentClassName', $classAttrs))
-            $className = substr($classAttrs['parentClassName'], strlen($classAttrs['parentClassNamespace'])+1);
+        if($classAttrs['parentClass'])
+            $className = $classAttrs['parentClass']['className'];
         else 
             $className = $classAttrs['className'];
         
@@ -93,64 +112,62 @@ trait EntityHandlerTrait
     public function getClassAttrs(EntityInterface $entity)
     {
         $api = new \ReflectionClass($entity);
+        $this->recursive = true;
+        
+        return $this->getAttrs($api, $entity);
+        
+    }
+    
+    private function getAttrs(\ReflectionClass $api, EntityInterface $entity)
+    {
         $classAttrs = array(
-            'api'=>$api,
+            'object'=>$entity,
             'namespace'=>$api->getNamespaceName(),
-            'className'=>substr($api->getName(), strlen($api->getNamespaceName())+1)
+            'className'=>substr($api->getName(), strlen($api->getNamespaceName())+1),
+            'properties'=>$this->getClassProperties($api),
+            'methods'=>$this->getClassMethods($api)
         );
         
-        foreach($api->getProperties(\ReflectionProperty::IS_PRIVATE) as $property)
+        if($this->recursive)
         {
-            $classAttrs['properties'][] = $property->name;
-        }
-        
-        foreach ($api->getMethods(\ReflectionProperty::IS_PUBLIC) as $method)
-        {
-            $classAttrs['methods'][] = $method->name;
-        }
-        
-        $classAttrs = $this->getParentClassAttrs($classAttrs);
-        unset($classAttrs['api']);
-        
-        return $classAttrs;
-    }
-    
-    private function getParentClassAttrs(array $classAttrs)
-    {
-        $parentClass = $classAttrs['api']->getParentClass();
-        if($parentClass)
-        {
-            $parts = explode('\\', $parentClass->name);
-            $lenght = strlen($parts[count($parts)-1]) + 1;
-            $classAttrs['parentClassName'] = $parentClass->name;
-            $classAttrs['parentClassNamespace'] = substr($parentClass->name, 0, -1*$lenght);
-            $classAttrs['parentProperties'] = $this->getParentClassProperties($classAttrs['parentClassName']);
-            $classAttrs['parentMethods'] = $this->getParentClassMethods($classAttrs['parentClassName']);
+            $classAttrs['parentClass'] = $this->getParentClassAttrs($api);
         }
         
         return $classAttrs;
     }
     
-    private function getParentClassProperties(string $className)
+    private function getClassProperties(\ReflectionClass $api)
     {
-        $properties = array();
+        $list = array();
         
-        $api = new \ReflectionClass($className);
-        foreach ($api->getProperties(\ReflectionProperty::IS_PRIVATE) as $property)
-            $properties[] = $property->name;
+        foreach ($api->getProperties(\ReflectionProperty::IS_PRIVATE) as $item)
+            $list[] = $item->name;
         
-        return $properties;
+        return $list;
     }
     
-    private function getParentClassMethods(string $className)
+    private function getClassMethods(\ReflectionClass $api)
     {
-        $methods = array();
+        $list = array();
         
-        $api = new \ReflectionClass($className);
-        foreach ($api->getMethods(\ReflectionProperty::IS_PUBLIC) as $property)
-            $methods[] = $property->name;
+        foreach ($api->getMethods(\ReflectionProperty::IS_PUBLIC) as $item)
+        {
+            if($item->class == $api->getName())
+                $list[] = $item->name;
+        }
             
-        return $methods;
+        return $list;
+    }
+    
+    private function getParentClassAttrs(\ReflectionClass $api)
+    {
+        if($api->getParentClass())
+        {
+            $this->recursive = false;
+            $parentApi = new \ReflectionClass($api->getParentClass()->name);
+            return $this->getAttrs($parentApi);
+        }else 
+            return false;
     }
 }
 

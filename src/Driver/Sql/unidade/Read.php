@@ -6,8 +6,10 @@ require_once 'libs/Sql/SqlRead.php';
 
 use src\Entity\Simple\Unidade;
 use libs\Sql\SqlRead;
+use src\Entity\EntityFactory;
 
-$sql = new SqlRead(new Unidade());
+$entity = new EntityFactory(new Unidade());
+$sql = new SqlRead($entity);
 $sql->setOrder('nome');
 
 return $sql;

@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace src\Entity\Simple;
 
-use src\Entity\EntityInterface;
-
-class Unidade implements EntityInterface
+class Unidade
 {
     private $id;
     private $nome;

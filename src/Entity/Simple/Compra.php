@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace src\Entity\Simple;
 
-use src\Entity\EntityInterface;
-
-class Compra implements EntityInterface
+class Compra
 {
     private $id;
     private $mercadoria;

@@ -18,5 +18,16 @@ class EmbalagemExtended extends Embalagem
         $this->unidade = new Unidade();
         $this->embalagemTipo = new EmbalagemTipo();
     }
+    
+    public function getUnidade()
+    {
+        return $this->unidade;
+    }
+
+    public function getEmbalagemTipo()
+    {
+        return $this->embalagemTipo;
+    }
+
 }
 
