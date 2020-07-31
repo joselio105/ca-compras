@@ -12,8 +12,11 @@ use src\Entity\Simple\Embalagem;
 use src\Entity\Simple\Unidade;
 use src\Entity\Simple\Mercadoria;
 use src\Entity\Simple\Compra;
+use src\Entity\EntityFactory;
 
-$sql = new SqlRead(new Mercadoria());
+$entity = new EntityFactory(new Mercadoria());
+$sql = new SqlRead($entity);
+
 $sql->setJoin(new Produto(), "mercadoria.produto=produto.id");
 $sql->setJoin(new ProdutoTipo(), "produto.tipo=produto_tipo.id");
 $sql->setJoin(new Embalagem(), "mercadoria.embalagem=embalagem.id");

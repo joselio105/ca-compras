@@ -9,10 +9,10 @@ require_once 'src/Driver/RepositoryInterface.php';
 use src\Entity\EntityInterface;
 use libs\Sql\SqlRead;
 use src\Driver\RepositoryInterface;
+use src\Entity\EntityFactory;
 
 class MysqlRepository implements RepositoryInterface
 {
-
     private $conn;
     private $entity;
     
@@ -24,22 +24,22 @@ class MysqlRepository implements RepositoryInterface
 
     public function read(SqlRead $read)
     {
-        //var_dump($read->__toString());die;
         $stmt = $this->conn->prepare($read->__toString());
         $stmt->execute($read->getStamments());
-        $result = $stmt->fetchAll(\PDO::FETCH_CLASS);
-        var_dump($result);die;
-        $className = get_class($this->entity);
-        foreach ($result as $r):
-            $entity = new $className();
+        //$result = $stmt->fetch(\PDO::FETCH_NUM);
         
-            foreach ($entity->getFields() as $field)
-            {
-                $entity->__set($field, $r[$field]);
-            }
-            $all[] = $entity;
-        endforeach;
-        var_dump($all);
+        $className = $this->entity->getEntityClassName();
+        
+        $position = 0;
+        while($row = $stmt->fetch(\PDO::FETCH_NUM))
+        {
+            $entity = new EntityFactory(new $className());
+            $entity->setAtributesValues($row);                
+            $all[$position] = $entity->getEntityObject();
+            $position++;
+        }
+        
+        var_dump($all);die;
         return $all;
     }
 

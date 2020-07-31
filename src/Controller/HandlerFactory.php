@@ -20,11 +20,9 @@ use src\Entity\Simple\Unidade;
 use src\Entity\Simple\EmbalagemTipo;
 use src\Entity\Simple\Embalagem;
 use src\Driver\Repository\MysqlRepository;
-use Traits\EntityHandlerTrait;
 
 class HandlerFactory
 {
-    use EntityHandlerTrait;
     
     public function __invoke(ContainerInterface $container, $requestedName)
     {
@@ -36,7 +34,10 @@ class HandlerFactory
         $response = array();
         
         $entity = $container->getEntity();
-        $sql = require "src/Driver/Sql/{$this->getTableName($entity)}/Read.php";
+        
+        $sqlFile = "src/Driver/Sql/{$entity->getTableName()}/Read.php";
+        
+        $sql = require $sqlFile;
         
         foreach ($servive->read($sql) as $i=>$line)
         {

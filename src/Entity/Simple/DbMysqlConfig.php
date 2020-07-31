@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace src\Entity\Simple;
 
-use src\Entity\EntityInterface;
-
-require_once 'src/Entity/EntityInterface.php';
-
-class DbMysqlConfig implements EntityInterface
+class DbMysqlConfig
 {
     private $dbHost;
     private $dbName;
